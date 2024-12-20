@@ -227,6 +227,16 @@
       </svg>
       <h1>Hello, {{ title }}</h1>
       <p>Congratulations! Your app is running. 🎉</p>
+      <div style="margin-top: 50px;">
+        <div *ngIf="isAuthenticated(); then userLoggedIn; else userLoggedOut"></div>
+        <ng-template #userLoggedIn>
+          <pre>{{ userData$ | async | json }}</pre>
+          <button (click)="logout()">Logout</button>
+        </ng-template>
+        <ng-template #userLoggedOut>
+          <button (click)="login()">Login</button>
+        </ng-template>
+      </div>
     </div>
     <div class="divider" role="separator" aria-label="Divider"></div>
     <div class="right-side">
