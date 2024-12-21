@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
     if (window.sessionStorage) {
       window.sessionStorage.clear();
     }
-    window.location.href = "https://eu-central-12vghmwgnt.auth.eu-central-1.amazoncognito.com/logout?client_id=61pt8jclur25fd1ofh116kp8m5&logout_uri=https://localhost:4444/";
+    window.location.href = "https://eu-central-12vghmwgnt.auth.eu-central-1.amazoncognito.com/logout?client_id=61pt8jclur25fd1ofh116kp8m5&logout_uri=https://localhost:4444";
     */
 
     // The following is from the oidc-client-angular library's README and did not work.
