@@ -12,5 +12,9 @@ export const authConfig: PassedInitialConfig = {
     useRefreshToken: true,
     renewTimeBeforeTokenExpiresInSeconds: 30,
     logLevel: LogLevel.Debug, // Enable debug logs
+    customParamsEndSessionRequest: {
+      client_id: '61pt8jclur25fd1ofh116kp8m5',
+      logout_uri: window.location.origin,
+    }
   }
 }
