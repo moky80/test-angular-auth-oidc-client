@@ -2,6 +2,9 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { OidcSecurityService, LoginResponse } from 'angular-auth-oidc-client';
+import { jwtDecode } from 'jwt-decode';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +18,9 @@ export class AppComponent implements OnInit {
   private bAuthenticated = false;
   userData$ = this.oidcSecurityService.userData$;
   ngOnInit() {
+    this.checkAuth();
+  }
+  checkAuth() {
     this.oidcSecurityService
       .checkAuth()
       .subscribe((loginResponse: LoginResponse) => {
@@ -22,7 +28,6 @@ export class AppComponent implements OnInit {
           loginResponse;
         console.log('loginResponse:', loginResponse);
         this.bAuthenticated = isAuthenticated
-        /*...*/
       });
   }
   login() {
@@ -51,5 +56,13 @@ export class AppComponent implements OnInit {
   }
   isAuthenticated(){
     return this.bAuthenticated;
+  }
+  decodedAccessToken(): Observable<any>{
+    return this.oidcSecurityService.getAccessToken().pipe(
+      map(token => token ? jwtDecode(token) : "")
+    );
+  }
+  refreshToken(): Observable<any>{
+    return this.oidcSecurityService.getRefreshToken();
   }
 }
