@@ -182,25 +182,27 @@
     <div class="left-side">
       <div style="margin-bottom: 10px;">
         <button (click)="checkAuth()">checkAuth</button>
-        <div *ngIf="isAuthenticated(); then userLoggedIn; else userLoggedOut"></div>
+        <div *ngIf="isAuthenticated() | async; then userLoggedIn; else userLoggedOut"></div>
         <ng-template #userLoggedIn>
           <button (click)="logout()">Logout</button>
+          <div><strong>access_token</strong></div>
+          <pre>{{accessToken() | async}}</pre>
+          <pre>{{decodedAccessToken() | async | json}}</pre>
+          <div>
+            <strong>refresh_token</strong>
+            <pre>{{refreshToken() | async }}</pre>
+          </div>
+          <div>
+            <strong>userData</strong>
+            <pre>{{ userData() | async | json }}</pre>
+          </div>
         </ng-template>
         <ng-template #userLoggedOut>
-          <button (click)="login()">Login</button>
+          <button (click)="login('cognito')">Login Cognito</button>
+          <button (click)="login('google')">Login Google</button>
+          <button (click)="login('facebook')">Login Facebook</button>
         </ng-template>
-        <div>
-          <strong>access_token</strong>
-          <pre>{{decodedAccessToken() | async | json}}</pre>
-        </div>
-        <div>
-          <strong>refresh_token</strong>
-          <pre>{{refreshToken() | async | json}}</pre>
-        </div>
-        <div>
-          <strong>userData</strong>
-          <pre>{{ userData$ | async | json }}</pre>
-        </div>
+
       </div>
       <svg
         xmlns="http://www.w3.org/2000/svg"
