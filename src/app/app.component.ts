@@ -50,7 +50,7 @@ export class AppComponent implements OnInit {
     // At first, it didn't work: Cognito reported "Missing required parameter client_id in request URL."
     // After adding the customParamsEndSessionRequest in the auth.config.ts, it worked.
     this.oidcSecurityService
-      .logoff()
+      .logoff(this.authenticatedResponse.configId)
       .subscribe((result) => {
         console.log('logoutResponse:', result);
         if (this.authenticatedResponse.configId=== 'google') {
@@ -66,18 +66,18 @@ export class AppComponent implements OnInit {
       });
   }
   isAuthenticated(): Observable<boolean> {
-    return this.oidcSecurityService.isAuthenticated();
+    return this.oidcSecurityService.isAuthenticated(this.authenticatedResponse.configId);
   }
   userData(): Observable<any> {
-    return this.oidcSecurityService.getUserData();
+    return this.oidcSecurityService.getUserData(this.authenticatedResponse.configId);
   }
   accessToken(): Observable<any>{
-    return this.oidcSecurityService.getAccessToken();
+    return this.oidcSecurityService.getAccessToken(this.authenticatedResponse.configId);
   }
   decodedAccessToken(): Observable<any>{
-    return this.oidcSecurityService.getPayloadFromAccessToken();
+    return this.oidcSecurityService.getPayloadFromAccessToken(false, this.authenticatedResponse.configId);
   }
   refreshToken(): Observable<any>{
-    return this.oidcSecurityService.getRefreshToken();
+    return this.oidcSecurityService.getRefreshToken(this.authenticatedResponse.configId);
   }
 }
